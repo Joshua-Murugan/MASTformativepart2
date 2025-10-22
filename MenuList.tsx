@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { MenuItem } from "./HomeScreen";
 
@@ -6,16 +6,14 @@ interface Props {
   item: MenuItem;
 }
 
-const MenuList: React.FC<Props> = ({ item }) => {
-  return (
-    <View style={styles.card}>
-      <Text style={styles.name}>{item.name}</Text>
-      <Text style={styles.course}>{item.course}</Text>
-      <Text style={styles.desc}>{item.description}</Text>
-      <Text style={styles.price}>R {item.price}</Text>
-    </View>
-  );
-};
+const MenuList: React.FC<Props> = ({ item }) => (
+  <View style={styles.card}>
+    <Text style={styles.name}>{item.name}</Text>
+    <Text style={styles.course}>{item.course}</Text>
+    <Text style={styles.desc}>{item.description}</Text>
+    <Text style={styles.price}>R {item.price}</Text>
+  </View>
+);
 
 export default MenuList;
 
