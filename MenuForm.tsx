@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,10 +6,9 @@ import {
   StyleSheet,
   TouchableOpacity,
   Alert,
-  Platform,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
 import { MenuItem } from "./HomeScreen";
+import { Picker } from "@react-native-picker/picker";
 
 interface Props {
   onAddItem: (item: MenuItem) => void;
@@ -22,7 +21,7 @@ const MenuForm: React.FC<Props> = ({ onAddItem }) => {
   const [price, setPrice] = useState("");
 
   const handleSubmit = () => {
-    if (!name || !desc || !price) {
+    if (!name.trim() || !desc.trim() || !price.trim()) {
       Alert.alert("Missing fields", "Please fill in all details");
       return;
     }
@@ -34,10 +33,10 @@ const MenuForm: React.FC<Props> = ({ onAddItem }) => {
 
     const newItem: MenuItem = {
       id: Date.now().toString(),
-      name,
-      description: desc,
+      name: name.trim(),
+      description: desc.trim(),
       course,
-      price,
+      price: Number(price).toFixed(2),
     };
 
     onAddItem(newItem);
@@ -68,27 +67,17 @@ const MenuForm: React.FC<Props> = ({ onAddItem }) => {
       />
 
       <Text style={styles.label}>Select Course</Text>
-      {Platform.OS === "web" ? (
-        <View style={styles.pickerContainer}>
-          <Picker
-            style={styles.dropdown}
-            selectedValue={course}
-            onValueChange={(value: string) => setCourse(value)}
-          >
-            <Picker.Item label="Starters" value="Starters" />
-            <Picker.Item label="Mains" value="Mains" />
-            <Picker.Item label="Dessert" value="Dessert" />
-          </Picker>
-        </View>
-      ) : (
-        <TextInput
-          style={styles.input}
-          placeholder="Starters / Mains / Dessert"
-          placeholderTextColor="#ccc"
-          value={course}
-          onChangeText={setCourse}
-        />
-      )}
+      <View style={styles.pickerContainer}>
+        <Picker
+          selectedValue={course}
+          onValueChange={(itemValue) => setCourse(itemValue)}
+          style={styles.picker}
+        >
+          <Picker.Item label="Starters" value="Starters" />
+          <Picker.Item label="Mains" value="Mains" />
+          <Picker.Item label="Dessert" value="Dessert" />
+        </Picker>
+      </View>
 
       <Text style={styles.label}>Price (R)</Text>
       <TextInput
@@ -126,16 +115,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   pickerContainer: {
-    width: "100%",
-    borderRadius: 8,
     backgroundColor: "#444",
+    borderRadius: 8,
     marginBottom: 10,
-    borderWidth: 1,
-    borderColor: "#555",
   },
-  dropdown: {
-    width: "100%",
+  picker: {
     color: "#fff",
+    width: "100%",
   },
   button: {
     backgroundColor: "#ffd700",

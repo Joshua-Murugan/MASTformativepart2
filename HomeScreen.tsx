@@ -7,8 +7,6 @@ import {
   SafeAreaView,
   Animated,
   ImageBackground,
-  Platform,
-  Dimensions,
 } from "react-native";
 import MenuForm from "./MenuForm";
 import MenuList from "./MenuList";
@@ -36,7 +34,9 @@ const HomeScreen: React.FC = () => {
 
   return (
     <ImageBackground
-      source={{ uri: "https://images.unsplash.com/photo-1600891964091-0b4f1f7d0eaa" }}
+      source={{
+        uri: "https://images.unsplash.com/photo-1600891964091-0b4f1f7d0eaa?auto=format&fit=crop&w=800&q=80",
+      }}
       style={styles.bg}
     >
       <SafeAreaView style={styles.container}>
@@ -62,18 +62,11 @@ const HomeScreen: React.FC = () => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
-  bg: { 
-    flex: 1, 
-    resizeMode: "cover",
-    minHeight: Platform.OS === 'web' ? Dimensions.get('window').height : '100%',
-  },
+  bg: { flex: 1 },
   container: {
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.7)",
     padding: 20,
-    maxWidth: Platform.OS === 'web' ? 800 : undefined,
-    alignSelf: 'center',
-    width: '100%',
   },
   header: {
     fontSize: 22,
