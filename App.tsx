@@ -1,21 +1,20 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { View, Platform } from "react-native";
+import { View, Platform, StyleSheet, Dimensions } from "react-native";
 import HomeScreen from "./HomeScreen";
+import ErrorBoundary from "./ErrorBoundary";
 
 const Stack = createNativeStackNavigator();
 
 const App: React.FC = () => {
-  if (Platform.OS === "web") {
-    return (
-      <View style={{ flex: 1, backgroundColor: "#1a1a1a" }}>
-        <HomeScreen />
-      </View>
-    );
-  }
+  const isWeb = Platform.OS === "web";
 
-  return (
+  const content = isWeb ? (
+    <View style={styles.webWrapper}>
+      <HomeScreen />
+    </View>
+  ) : (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
@@ -30,6 +29,16 @@ const App: React.FC = () => {
       </Stack.Navigator>
     </NavigationContainer>
   );
+
+  return <ErrorBoundary>{content}</ErrorBoundary>;
 };
+
+const styles = StyleSheet.create({
+  webWrapper: {
+    minHeight: Dimensions.get("window").height,
+    backgroundColor: "#1a1a1a",
+    width: "100%",
+  },
+});
 
 export default App;
